@@ -1,6 +1,9 @@
 <?php
+    session_start();
+    ob_start();
     include "../../models/pdo.php";
     include "../../models/AdminModel.php";
+    include "../../models/ClientModel.php";
     include "header/header.php";
     if(isset($_GET['act'])){
         $act = $_GET['act'];
@@ -69,6 +72,7 @@
                     $gia = $_POST['gia'];
                     $size = $_POST['size'];
                     $mo_ta = $_POST['mo_ta'];
+                    $iddm = $_POST['id_danh_muc'];
                     $img = $_FILES['img']['name'];
                     $target_dir = "uploads/";
                     $target_file = $target_dir . basename($_FILES["img"]["name"]);
@@ -77,7 +81,7 @@
                       } else {
                         //echo "Sorry, there was an error uploading your file.";
                       }
-                    insert_sanpham($ten_san_pham,$gia,$img,$size,$mo_ta);
+                    insert_sanpham($ten_san_pham,$gia,$img,$iddm,$size,$mo_ta);
                     $thongbao = "Thêm thành công";
                 }
                 $listdm = loadall_danhmuc();
@@ -118,7 +122,7 @@
                       } else {
                         //echo "Sorry, there was an error uploading your file.";
                       }
-                    update_sanpham($id,$ten_san_pham,$gia,$img,$size,$mo_ta);
+                    update_sanpham($id,$id_danh_muc,$ten_san_pham,$gia,$img,$size,$mo_ta);
                     $thongbao = "Cập nhật thành công";
                 }
                 $listdm = loadall_danhmuc();
@@ -235,6 +239,7 @@
                     update_user($id,$tenUser,$email,$sdt,$ngaySinh,$diaChi,$account,$pass,$moTa,$role);
                     $thongBao = " Thêm thành công";
                 }
+                $listtkuser = loadall_taikhoan();
                 include "quanlinguoidung/list.php";
                 break;
 
@@ -311,25 +316,17 @@
                 break;
             //controller bình luận
             case "listbl":
-                $sql = "select * from tb_binh_luan";
-                $listbl = pdo_query($sql);
+                $listbl = load_binhluan();
                 include "binhluan/list.php";
                 break;
             case "delbl":
                 if (isset($_GET['id']) && ($_GET['id'])) {
                     $id = $_GET['id'];
-                    $sql = "delete from tb_binh_luan where id = '$id'";
-                    pdo_execute($sql);
+                    delete_binhluan($id);              
                 }
+                $listbl = load_binhluan();
                 include "binhluan/list.php";
                 break;
-            case "editbl":
-                $id = $_GET['id'];
-                $sql = "select * from tb_binh_luan where id = '$id'";
-                $listbl = pdo_query($sql);
-                include "binhluan/update.php";
-                break;
-
 
             //controller bài viết
             case "addbv":
@@ -380,12 +377,74 @@
                 $listbv = loadall_bai_viet();
                 include "baiviet/list.php";
                 break;
-            default: include "home/home.php";
+
+                // controller đơn hàng
+            case "listdh":
+                $listhd = loadall_hoadon();
+                include "donhang/list.php";
                 break;
-        }
+                
+            case "xemdh":
+                if(isset($_GET['id'])&&$_GET['id']>0){
+                    $id = $_GET['id'];
+                }
+                $bill=load_one_bill($id);
+                $billct=load_all_cart($id);
+                include "donhang/chitietdonhang.php";
+                break;
+                
+            case "editdh":
+                if(isset($_GET['id']) && $_GET['id'] > 0){
+                    $id=$_GET['id'];
+                    $bill=load_one_bill_adm($id);
+                }
+                $list_tt = loadall_tt();
+                include "donhang/update.php";
+                break;
+
+            case "updhd":
+                if(isset($_POST['capnhat']) && $_POST['capnhat']){
+                    $id = $_POST['id'];
+                    $trang_thai = $_POST['id_trang_thai'];
+                    update_tthai($id,$trang_thai);
+  
+                } 
+                $listhd = loadall_hoadon();
+                include "donhang/list.php";
+                break;
+
+                // liên hệ
+            case "listlh":
+                $listlh = loadall_lien_he();
+                include "lienhe/list.php";
+                break;
+            case "dellh":
+                if (isset($_GET['id']) && ($_GET['id'])) {
+                    $id = $_GET['id'];
+                    $sql = "delete from tb_lien_he where id = '$id'";
+                    pdo_execute($sql);
+                }
+                $listlh = loadall_lien_he();
+                include "lienhe/list.php";
+                break;
+                break;
+
+             // thống kê sản phẩm
+            case 'thongke':
+                $listthongke = loadall_thongke();
+                include "thongke/list.php";
+                break;
+
+            case 'bieudo':
+                $listthongke = loadall_thongke();
+                include "thongke/bieudo.php";
+                break;
+
+
+            }
     }else{
         include "home/home.php";
     }
     include "footer/footer.php";
-
+    ob_end_flush();
 ?>

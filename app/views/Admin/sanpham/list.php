@@ -20,12 +20,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Trang quản trị</h1>
+              <h1 class="m-0">Quản lý sản phẩm</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Trang quản trị</li>
+                <li class="breadcrumb-item active">Quản lý sản phẩm</li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->
@@ -50,7 +50,7 @@
                 extract($sanpham);
                 $img_path = "uploads/".$img;
                 if(is_file($img_path)){
-                    $img = "<img src='".$img_path."' height='80'>";
+                    $img = "<img src='".$img_path."' width='230'>";
                 }else{
                     $img = "no photo";
                 }

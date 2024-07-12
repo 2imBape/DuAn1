@@ -20,12 +20,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Trang quản trị</h1>
+              <h1 class="m-0">Quản lý sản phẩm</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Trang quản trị</li>
+                <li class="breadcrumb-item active">Quản lý sản phẩm</li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->
@@ -36,6 +36,8 @@
 
       <!-- Main content -->
       <div class="content"><!--/. container-fluid -->
+      
+      <form action="indexadmin.php?act=addsp" method="post" enctype="multipart/form-data">
       <select name="id_danh_muc">
         <?php
             foreach ($listdm as $danhmuc) {
@@ -44,7 +46,6 @@
             }
         ?>
     </select>
-      <form action="indexadmin.php?act=addsp" method="post" enctype="multipart/form-data">
         <div class="content">
           <label for="">Tên sản phẩm:</label><br>
           <input type="text" name="ten_san_pham">
@@ -63,7 +64,7 @@
         </div>
         <div class="content">
           <label for="">Mô tả:</label><br>
-          <input type="text" name="mo_ta">
+          <textarea name="mo_ta" id="" cols="30" rows="10"></textarea>
         </div>
         <br>
         <div class="content">

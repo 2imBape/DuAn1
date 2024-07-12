@@ -20,12 +20,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Trang quản trị</h1>
+              <h1 class="m-0">Quản lý danh mục</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Trang quản trị</li>
+                <li class="breadcrumb-item active">Quản lý danh mục</li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->
@@ -51,7 +51,7 @@
                 $deldm = "indexadmin.php?act=deldm&id=".$id;
                 $img_path = "uploads/".$img;
                 if(is_file($img_path)){
-                    $img = "<img src='".$img_path."' height='80'>";
+                    $img = "<img src='".$img_path."' width='80'>";
                 }else{
                     $img = "no photo";
                 }
@@ -60,12 +60,18 @@
                 <td>'.$ten_danh_muc.'</td>
                 <td>'.$mo_ta.'</td>
                 <td>'.$img.'</td>
-                <td>'.$trang_thai.'</td>
-                <td>
+                <td>'.$trang_thai.'</td>';
+                  if(isset($_SESSION['useradmin'])&&($_SESSION['useradmin']['role_id']==1)){
+                  echo '<td>
                   <a href="'.$editdm.'"><input type="button" value="Sửa"></a>
                   <a href="'.$deldm.'"><input type="button" value="Xóa"></a>
-                </td>
-            </tr>';
+                </td>';
+                             
+                }else{
+                    $thongbao = "Bạn không đủ quyền hạn để sử dụng dụng chức năng này";
+                }
+                
+            '</tr>';
               }
             
             ?>
@@ -84,7 +90,15 @@
     </div>
     <br>
     <div class="content">
-      <a href="indexadmin.php?act=adddm"><input type="button" value="Thêm mới"></a>
+      <?php
+          if(isset($_SESSION['useradmin'])&&($_SESSION['useradmin']['role_id']==1)){
+            echo '<a href="indexadmin.php?act=adddm"><input type="button" value="Thêm mới"></a>';
+                       
+          }else{
+              $thongbao = "Bạn không đủ quyền hạn để sử dụng dụng chức năng này";
+          }
+      ?>
+      
     </div>
       <div class="content-wrapper row mb-2 col-sm-6">
         

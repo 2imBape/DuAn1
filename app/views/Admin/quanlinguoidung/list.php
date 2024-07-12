@@ -68,7 +68,9 @@
                     <td><?php
                       if($role_id==1) echo 'admin'; else echo 'user';
                     ?></td>
-                    <td><a href="<?= $suauser ?>"><input type="button" value="Sửa"></a>   <a href="<?= $deluser ?>"><input type="button" value="Xóa"></a></td>
+                      
+                    <td><a href="<?= $suauser ?>"><input type="button" value="Sửa"></a>  
+                    <a href="<?= $deluser ?>"><input type="button" value="Xóa"></a></td>
                 </tr>
             <?php  } ?>
         </table>

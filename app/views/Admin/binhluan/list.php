@@ -20,12 +20,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Trang quản trị</h1>
+              <h1 class="m-0">Quản lý bình luận</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Trang quản trị</li>
+                <li class="breadcrumb-item active">Quản lý bình luận</li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->
@@ -40,6 +40,8 @@
             <tr>
                 <th>Mã bình luận</th>
                 <th>Nội dung bình luận</th>
+                <th>Tên khách hàng</th>
+                <th>Tên sản phẩm</th>
                 <th>Ngày bình luận</th>
                 <th>Tùy chọn</th>
             </tr>
@@ -49,9 +51,10 @@
             echo "<tr>
                 <td>".$id."</td>
                 <td>".$noi_dung."</td>
-                <td>".$ngay_bl."</td>
+                <td>".$bl['account']."</td>
+                <td>".$bl['ten_san_pham']."</td>
+                <td>".$ngay_danh_gia."</td>
                 <td>
-                  <a href='indexadmin.php?act=editbl&id=".$id."'><input type='button' value='Sửa'></a>
                   <a href='indexadmin.php?act=delbl&id=".$id."'><input type='button' value='Xóa'><a/></td></tr>"; }
 
           ?>

@@ -48,13 +48,7 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="indexadmin.php?act=listbanner" class="nav-link">
-                <p>
-                  Quản lý banner
-                </p>
-              </a>
-            </li>
+            
             <li class="nav-item">
               <a href="indexadmin.php?act=listuser" class="nav-link">
                 <p>
@@ -77,13 +71,27 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="indexadmin.php?act=listbv" class="nav-link">
+              <a href="indexadmin.php?act=listlh" class="nav-link">
                 <p>
-                  Quản lý bài viết
+                  Quản lý liên hệ
                 </p>
               </a>
             </li>
-            
+            <li class="nav-item">
+              <a href="indexadmin.php?act=listdh" class="nav-link">
+                <p>
+                  Quản lý đơn hàng
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="indexadmin.php?act=thongke" class="nav-link">
+                <p>
+                  Thống kê sản phẩm
+                </p>
+              </a>
+            </li>
+           
           </ul>
         </nav>
         <!-- /.sidebar-menu -->

@@ -9,7 +9,7 @@
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="../views/Client/img/favicon.ico" rel="icon">
+    <link href="app/views/Client/img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -19,10 +19,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="../views/Client/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="app/views/Client/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="../views/Client/css/style.css" rel="stylesheet">
+    <link href="app/views/Client/css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -60,30 +60,29 @@
         </div>
         <div class="row align-items-center py-3 px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
-                <a href="" class="text-decoration-none">
+                <a href="index.php" class="text-decoration-none">
                     <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-                <form action="">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
-                        <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
-                            </span>
-                        </div>
+                <form action="index.php?act=sanpham" method="POST">
+                    <div class="input-group-append">
+                        <input type="text" id="" style="width: 600px; " placeholder="Tìm kiếm sản phẩm" name="kyw">
+                        <button class="search" style="border: 1px solid grey; border-radius: 1px 1px;">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-transparent text-primary">
+                                    <i class="fa fa-search"></i>
+                                </span>
+                            </div>
+                        </button>
                     </div>
                 </form>
             </div>
             <div class="col-lg-3 col-6 text-right">
-                <a href="" class="btn border">
-                    <i class="fas fa-heart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
-                <a href="" class="btn border">
+                
+                <a href="index.php?act=giohang" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span class="badge"></span>
                 </a>
             </div>
         </div>
@@ -106,7 +105,8 @@
                     
                         foreach ($load_danh_muc as $danhmuc) {
                             extract($danhmuc);
-                            echo '<a href="" class="nav-item nav-link">'.$ten_danh_muc.'</a>';
+                            $linkdm = "index.php?act=sanpham&id_danh_muc=".$id;
+                            echo '<a href="'.$linkdm.'" class="nav-item nav-link">'.$ten_danh_muc.'</a>';
                         }
                     
                     ?>
@@ -131,35 +131,75 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <?php
+                            if(isset($_SESSION['useradmin'])){
+                                extract($_SESSION['useradmin']);
+                                ?>
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="ClientController.php" class="nav-item nav-link">Home</a>
-                            <a href="ClientController.php?act=shop" class="nav-item nav-link">Shop</a>
-                            <a href="ClientController.php?act=spct" class="nav-item nav-link">Liên hệ</a>
-                            <a href="ClientController.php?act=contact" class="nav-item nav-link">Bài viết</a>
+                            <a href="index.php" class="nav-item nav-link">Trang chủ</a>
+                            <a href="index.php?act=shop" class="nav-item nav-link">Sản phẩm</a>
+                            <a href="index.php?act=contact" class="nav-item nav-link">Liên hệ</a>
+                            <a href="app/views/Admin/indexadmin.php" class="nav-item nav-link">Admin</a>
+                            
                         </div>
-                        <div class="navbar-nav ml-auto py-0">
-                            <a href="ClientController.php?act=dangnhap" class="nav-item nav-link">Login</a>
-                            <a href="ClientController.php?act=dangki" class="nav-item nav-link">Register</a>
+                            <?php    
+                            }else{
+                                ?>
+                        <div class="navbar-nav mr-auto py-0">
+                            <a href="index.php" class="nav-item nav-link">Trang chủ</a>
+                            <a href="index.php?act=Sản phẩm" class="nav-item nav-link">Shop</a>
+                            <a href="index.php?act=contact" class="nav-item nav-link">Liên hệ</a>
                         </div>
+
+                           <?php } ?>
+                        
+                        <?php
+                            if(isset($_SESSION['user'])){
+                                extract($_SESSION['user']);
+                                // extract($_SESSION['useradmin']);
+                                ?>
+                                <div class="navbar-nav ml-auto py-0">
+                                    <p class="nav-item nav-link">Xin chào <?=$ten?></p>
+                                    <a href="index.php?act=thoat" class="nav-item nav-link">Thoát</a>
+                                </div>
+                            <?php
+                            }else if(isset($_SESSION['useradmin'])){
+                                extract($_SESSION['useradmin']);
+                                ?>
+                                <div class="navbar-nav ml-auto py-0">
+                                    <p class="nav-item nav-link">Xin chào <?=$ten?></p>
+                                    <a href="index.php?act=thoat" class="nav-item nav-link">Thoát</a>
+                                </div>
+                                <?php
+                            }
+                            else{
+                                ?>
+                                <div class="navbar-nav ml-auto py-0">
+                                <a href="index.php?act=dangnhap" class="nav-item nav-link">Đăng nhập</a>
+                                <a href="index.php?act=dangnhapadmin" class="nav-item nav-link">Đăng nhập Admin</a>
+                                <a href="index.php?act=dangki" class="nav-item nav-link">Đăng kí</a>
+                            </div>
+                        <?php } ?>
+                        
                     </div>
                 </nav>
                 <div id="header-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
-                        <div class="carousel-item active" style="height: 410px;">
-                            <img class="img-fluid" src="../views/Client/img/carousel-1.jpg" alt="Image">
+                        <div class="carousel-item active" style="height: 350px;">
+                            <img class="img-fluid" src="app/views/Client/img/carousel-1.jpg" alt="Image">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
-                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3"></h4>
                                     <h3 class="display-4 text-white font-weight-semi-bold mb-4">Fashionable Dress</h3>
                                     <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="carousel-item" style="height: 410px;">
-                            <img class="img-fluid" src="../views/Client/img/carousel-2.jpg" alt="Image">
+                        <div class="carousel-item" style="height: 350px;">
+                            <img class="img-fluid" src="app/views/Client/img/carousel-2.jpg" alt="Image">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
-                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3"></h4>
                                     <h3 class="display-4 text-white font-weight-semi-bold mb-4">Reasonable Price</h3>
                                     <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
                                 </div>
@@ -183,33 +223,4 @@
     <!-- Navbar End -->
 
 
-    <!-- Featured Start -->
-    <div class="container-fluid pt-5">
-        <div class="row px-xl-5 pb-3">
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
-                    <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
-                    <h5 class="font-weight-semi-bold m-0">Quality Product</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
-                    <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
-                    <h5 class="font-weight-semi-bold m-0">Free Shipping</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
-                    <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
-                    <h5 class="font-weight-semi-bold m-0">14-Day Return</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
-                    <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
-                    <h5 class="font-weight-semi-bold m-0">24/7 Support</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Featured End -->
+    

@@ -1,10 +1,14 @@
+
+
+
+
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
   <div class="wrapper">
 
     <!-- Preloader -->
-    <div class="preloader flex-column justify-content-center align-items-center">
+    <!-- <div class="preloader flex-column justify-content-center align-items-center">
       <img class="animation__wobble" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-    </div>
+    </div> -->
 
     <!-- Navbar -->
     <?php  include "menungang/menungang.php"; ?>
@@ -35,30 +39,42 @@
       <!-- /.content-header -->
 
       <!-- Main content -->
-      <div class="content"><!--/. container-fluid -->
-      <form action="indexadmin.php?act=addbl" method="post" enctype="multipart/form-date">
-        <div class="content">
-          <label for="">Mã bình luận:</label><br>
-          <input type="text" name="id_bl" disabled>
-        </div>
-        <div class="content">
-          <label for="">Nội dung bình luận:</label><br>
-          <input type="text" name="noi_dung_bl">
-        </div>
-        <div class="content">
-          <label for="">Trạng thái bình luận:</label><br>
-          <input type="text" name="trang_thai_bl">
-        </div>
-      <div class="content">
-          <label for="">Ngày bình luận :</label><br>
-          <input type="date" name="ngay_bl" id="">
-      </div><br>
-        <div class="content">
-          <input type="submit" name="themmoi_bl" value="Thêm mới">
-          <a href="indexadmin.php?act=listbl"><input type="button" name="danhsach_bl" value="Danh sách"></a>
-        </div>
-      </form>
-    </div>
+      <div class="content table_danhmuc"><!--/. container-fluid -->
+      <div class="row">
+<div id="piechart"></div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['Danh mục', 'Số lượng sản phẩm'],
+  <?php
+    $tongdm=count($listthongke);
+    $i=1;
+    foreach ($listthongke as $thongke) {
+        extract($thongke);
+        if($i==$tongdm) $dauphay="";else $dauphay=",";
+        echo "['".$thongke['tendm']."', ".$thongke['countsp']."]".$dauphay;
+        $i+=1;
+    }
+  ?>
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Thông kê sản phẩm theo loại', 'width':1100, 'height':800};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+}
+</script>
+</div>
       <div class="content-wrapper row mb-2 col-sm-6">
         
       </div>
@@ -71,5 +87,4 @@
       
       <!-- Control sidebar content goes here -->
     </aside>
-    <!-- Control Sidebar -->
-    
+    <!-- /.control-sidebar -->

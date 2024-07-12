@@ -4399,7 +4399,9 @@ input[type="button"].btn-block {
   justify-content: space-between;
   padding: 0.5rem 0.5rem;
 }
-
+.vdt{
+  
+}
 .navbar .container,
 .navbar .container-fluid, .navbar .container-sm, .navbar .container-md, .navbar .container-lg, .navbar .container-xl {
   display: -ms-flexbox;
